@@ -26,7 +26,10 @@ declare global {
   interface Window { JSSpeccy?: JSSpeccyFactory }
 }
 
-const SCRIPT_URL = '/jsspeccy/jsspeccy.js';
+// Base-relative, so a deployment under a subpath (GitHub Pages) still resolves.
+// JSSpeccy loads its own ROMs against `document.currentScript.src`, so getting
+// this one URL right is enough for the vendored assets beside it.
+const SCRIPT_URL = `${import.meta.env.BASE_URL}jsspeccy/jsspeccy.js`;
 let loading: Promise<JSSpeccyFactory> | null = null;
 
 function loadRuntime(): Promise<JSSpeccyFactory> {

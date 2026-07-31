@@ -1,5 +1,7 @@
 # ZX BASIC TAP editor
 
+**→ [admitrievsky.github.io/zx-bas-editor](https://admitrievsky.github.io/zx-bas-editor/)**
+
 Browser-based editor for ZX Spectrum `.tap` files: load a tape, edit the BASIC
 program as plain text, save it back as a `.tap`. Everything runs client-side —
 no server, no upload.
@@ -10,6 +12,18 @@ npm run dev      # http://localhost:5173
 npm test         # unit + property tests
 npm run test:tap -- path/to/file.tap    # round-trip a real tape
 ```
+
+## Deploying
+
+```bash
+npm run deploy   # build + force-push dist/ to the gh-pages branch
+```
+
+`dist/` is gitignored and never lands on `main`; the script publishes it as a
+single-commit `gh-pages` branch. Assets are built with `base: './'` so the same
+output works at a domain root and under the `/zx-bas-editor/` project subpath.
+Deployment is manual — the live site reflects the last `npm run deploy`, not the
+last push to `main`.
 
 ## Approach
 
