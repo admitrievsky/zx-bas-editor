@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZX BASIC TAP Editor</title>
+    <script type="module" crossorigin src="./assets/index-CMjiZcUo.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BAQI517p.css">
+  </head>
+  <body>
+    <header class="bar">
+      <h1>ZX BASIC <span>TAP editor</span></h1>
+      <div class="actions">
+        <button id="open">Open .tap</button>
+        <button id="paste">Paste BASIC&hellip;</button>
+        <button id="verify" disabled>Verify round-trip</button>
+        <button id="renumber" disabled>Renumber&hellip;</button>
+        <button id="run" disabled>Run &#9654;</button>
+        <button id="save" class="primary" disabled>Save .tap</button>
+        <input type="file" id="file" accept=".tap" hidden />
+      </div>
+    </header>
+
+    <main id="layout">
+      <aside class="side">
+        <section>
+          <h2>Tape blocks</h2>
+          <ul id="blocks" class="blocks"><li class="empty">No file loaded</li></ul>
+        </section>
+        <section>
+          <h2>Header</h2>
+          <dl id="header" class="header"><dd class="empty">&mdash;</dd></dl>
+        </section>
+        <section>
+          <h2>Notes</h2>
+          <div id="notes" class="notes"><p class="empty">&mdash;</p></div>
+        </section>
+      </aside>
+
+      <section class="editor">
+        <div id="status" class="status">
+          Drop a <code>.tap</code> file anywhere, or press <b>Open .tap</b>.
+        </div>
+        <div class="pane">
+          <pre id="gutter" class="gutter" aria-hidden="true"></pre>
+          <textarea id="code" spellcheck="false" wrap="off" autocomplete="off"
+                    placeholder="BASIC listing appears here once a tape is loaded."></textarea>
+        </div>
+      </section>
+    </main>
+
+    <div id="paste-dlg" class="emu" hidden>
+      <div class="emu-box dialog wide">
+        <div class="emu-bar"><span id="paste-title">Paste a BASIC listing</span></div>
+        <div class="fields">
+          <label>Tape name <input id="paste-name" type="text" maxlength="10" value="PROGRAM" /></label>
+          <label>Autostart <input id="paste-autostart" type="number" min="0" max="9999" placeholder="none" /></label>
+          <button id="paste-clipboard">Read clipboard</button>
+        </div>
+        <textarea id="paste-text" spellcheck="false" wrap="off" autocomplete="off"
+                  placeholder="10 PRINT &quot;HELLO&quot;&#10;20 GO TO 10"></textarea>
+        <p id="paste-preview" class="renum-preview">&mdash;</p>
+        <div id="paste-issues" class="renum-warnings"></div>
+        <div class="dialog-actions">
+          <button id="paste-cancel">Cancel</button>
+          <button id="paste-create" class="primary" disabled>Create tape</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="renum" class="emu" hidden>
+      <div class="emu-box dialog">
+        <div class="emu-bar"><span id="emu-title-r">Renumber lines</span></div>
+        <div class="fields">
+          <label>Start <input id="renum-start" type="number" min="1" max="9999" value="10" /></label>
+          <label>Step <input id="renum-step" type="number" min="1" max="999" value="10" /></label>
+        </div>
+        <p id="renum-preview" class="renum-preview">&mdash;</p>
+        <div id="renum-warnings" class="renum-warnings"></div>
+        <div class="dialog-actions">
+          <button id="renum-cancel">Cancel</button>
+          <button id="renum-apply" class="primary">Renumber</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="emu" class="emu" hidden>
+      <div class="emu-box">
+        <div class="emu-bar">
+          <span id="emu-title">Emulator</span>
+          <label>Machine
+            <select id="emu-machine">
+              <option value="48" selected>48K</option>
+              <option value="128">128K</option>
+              <option value="5">Pentagon</option>
+            </select>
+          </label>
+          <button id="emu-reload">Reload tape</button>
+          <button id="emu-close">Close</button>
+        </div>
+        <div id="emu-host" class="emu-host"></div>
+        <p class="emu-note">
+          Runs the listing as it is now, not the file on disk. Powered by
+          <a href="https://github.com/gasman/jsspeccy3" target="_blank" rel="noreferrer">JSSpeccy 3</a> (GPL-3.0).
+        </p>
+      </div>
+    </div>
+
+    <div id="drop" class="drop"><div>Drop .tap file</div></div>
+  </body>
+</html>
